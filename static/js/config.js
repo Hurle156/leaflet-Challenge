@@ -1,1 +1,1 @@
-const APIkey = "pk.eyJ1IjoiaHVybGUxNTYiLCJhIjoiY2s4Z2l4N21kMDIzdTNkbzllNTgydXF0biJ9.oLIFBjob3sdate0KUqvSKQ"
+const APIkey = "add your key"

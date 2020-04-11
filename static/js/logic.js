@@ -25,23 +25,50 @@ d3.json(dataUrl, function(response){
 
         quakeCoord.push([location.coordinates[1], location.coordinates[0]]);
         var quakeMag = features[i].properties.mag;
-        console.log(quakeMag[i]);
+        console.log(quakeMag);
         console.log(quakeCoord[i]);
-            
-        
-        // else{
-        //     quakeCoord.push([location.coordinates[1], location.coordinates[0]]);
-        //     quakeMag.push(features[i].properties.mag);
-        // }
+        var color = ""
+       if (quakeMag >= 5){
+           color = "red";
+       }
+       else if (quakeMag >= 4){
+           color = "lightsalmon";
+       }
+       else if (quakeMag >= 3){
+           color =  "orange";
+       }
+       else if (quakeMag >= 2){
+            color = "yellow";
+       }
+       else if (quakeMag >= 1){
+           color = "Chartreuse";
+       }
+       else{
+           color = "LimeGreen"
+       }
+       
         L.circle(quakeCoord[i], {
             fillOpacity: 0.75,
-            color: "green",
-            fillColor: "green",
+            color: color,
+            fillColor: color,
             radius: quakeMag * 50000
-        }).addTo(myMap);
+        }).bindPopup(`<h1>EarthQuake Magnitude</h1> <hr> <h3>${quakeMag} </h3>`).addTo(myMap);
     }
-   
-   
-})
+   var legend = L.control({ position: "bottomright"});
+   legend.onAdd = function(){
+    var div = L.DomUtil.create('div', 'info legend');
+    ranges = ["0-1", "1-2", "2-3", "3-4", "4-5", "5+"];
+    colors = ["LimeGreen", "Chartreuse", "yellow", "orange", "lightsalmon", "red"];
+    labels = [];
+    ranges.forEach(function(ranges, i){
+         labels.push("<li style=\"background-color: " + colors[i] + "\">"+ranges+"</li>");
+        });
+
+    div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+
+    return div;
+   };
+legend.addTo(myMap);
+});
 
 
